@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fünf Anfragen, fünf Einsatzorte</title>
+<title>Sechs Anfragen, sechs Einsatzorte</title>
 <style>
 :root{
   --blau:#004993;
@@ -11,6 +11,8 @@
   --blau-hell:#D4EAFA;
   --blau-blass:#EDF4FC;
   --orange:#F39100;
+  --ok:#1E7B4F;
+  --bad:#B32C22;
   --ink:#202020;
   --ink-2:#545454;
   --ink-3:#8A8A8A;
@@ -89,7 +91,7 @@ h1{font-size:clamp(22px,3.4vw,30px);font-weight:700;line-height:1.15;margin:0 0 
   padding:14px 16px 16px;
   margin:0 0 16px;
 }
-.case:last-of-type{margin-bottom:0}
+.case:last-child{margin-bottom:0}
 .case-head{display:flex;gap:12px;align-items:baseline;margin-bottom:8px}
 .case-badge{
   background:var(--blau);color:#fff;
@@ -97,14 +99,28 @@ h1{font-size:clamp(22px,3.4vw,30px);font-weight:700;line-height:1.15;margin:0 0 
   padding:2px 10px;flex:0 0 auto;
 }
 .case-text{margin:0;max-width:62ch}
-.field-label{
-  display:block;font-size:13px;color:var(--ink-2);
-  margin:12px 0 4px;
+.field-label{display:block;font-size:13px;color:var(--ink-2);margin:12px 0 4px}
+
+/* ---------- Zuordnung mit Auswahl ---------- */
+.pick{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px}
+select{
+  font-family:inherit;font-size:14.5px;
+  padding:8px 10px;border:1px solid var(--ink-3);background:#fff;color:var(--ink);
+  min-width:17em;
 }
+select:focus-visible{outline:3px solid var(--orange);outline-offset:1px}
+.verdict{
+  margin-top:10px;padding:10px 14px;
+  border-left:4px solid var(--line);background:#F6F6F6;
+  font-size:14px;color:var(--ink-2);max-width:62ch;
+}
+.verdict.ja{border-left-color:var(--ok);background:#EEF6F1;color:var(--ink)}
+.verdict.nein{border-left-color:var(--bad);background:#FBEFEE;color:var(--ink)}
+.verdict b{font-weight:700}
 
 /* ---------- Tabellen ---------- */
 .table-wrap{overflow-x:auto;margin:0 0 14px}
-table{border-collapse:collapse;width:100%;min-width:540px;font-size:13.5px}
+table{border-collapse:collapse;width:100%;min-width:400px;font-size:13.5px}
 th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
 thead th{
   background:var(--blau);color:#fff;border-color:var(--blau);
@@ -112,8 +128,6 @@ thead th{
 }
 td.model{width:14em;font-weight:600;background:var(--blau-hell)}
 td.ip{width:7em;font-weight:700}
-td.fall{width:3.4em;text-align:center;font-weight:700;background:var(--blau-hell)}
-td.entry{background:#fff;min-width:12em}
 
 /* ---------- Antwortfelder ---------- */
 .answer{
@@ -142,7 +156,7 @@ td.entry{background:#fff;min-width:12em}
   .notice,.tools{display:none}
   .head,.task{break-inside:avoid;page-break-inside:avoid;margin-bottom:12px}
   .case{break-inside:avoid;page-break-inside:avoid}
-  .head-bar,.head-body,.task-bar,thead th,.case-badge,td.model,td.fall{
+  .head-bar,.head-body,.task-bar,thead th,.case-badge,td.model,.verdict{
     -webkit-print-color-adjust:exact;print-color-adjust:exact;
   }
   .subtitle{color:#DCE8F5}
@@ -150,11 +164,13 @@ td.entry{background:#fff;min-width:12em}
   table{min-width:0;font-size:9.2pt}
   h1{font-size:20pt}
   .head-body{padding:16px 16px 14px}
+  select{border:1px solid #8A8A8A}
 }
 
 @media(max-width:620px){
   body{padding:16px 10px 48px}
   .head-body,.head-note,.task-body{padding:14px}
+  select{min-width:100%}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -169,12 +185,12 @@ td.entry{background:#fff;min-width:12em}
       <span>Einsatzort</span>
     </div>
     <div class="head-body">
-      <h1>Fünf Anfragen, fünf Einsatzorte</h1>
+      <h1>Sechs Anfragen, sechs Einsatzorte</h1>
       <p class="subtitle">Welche Schutzart wird wo verlangt?</p>
     </div>
     <div class="head-note">
       <p>Lies in der DGUV Information 215-314 das Kapitel 5.7 vollständig. Sieh dir dabei auch die Tabellen 3 und 4 an.</p>
-      <p>Auf dem Tisch deines Ausbilders liegen fünf Anfragen. Bevor er Angebote schreibt, muss geklärt sein, welche Geräte an welchem Ort überhaupt eingesetzt werden dürfen.</p>
+      <p>Auf dem Tisch deines Ausbilders liegen sechs Anfragen. Bevor er Angebote schreibt, muss geklärt sein, welche Geräte an welchem Ort überhaupt eingesetzt werden dürfen.</p>
       <p class="quelle">DGUV Information 215-314 „Sicherheit bei Veranstaltungen und Produktionen – Scheinwerfer“, Version 2.2/2017-03</p>
     </div>
   </div>
@@ -188,11 +204,12 @@ td.entry{background:#fff;min-width:12em}
     <div class="task-bar"><span class="num">1</span><h2>Mindestschutzart bestimmen</h2></div>
     <div class="task-body">
       <p>Bestimme für jeden Fall die geforderte Mindestschutzart. Schreibe dazu auf, mit welcher Formulierung die DGUV Information die Situation beschreibt.</p>
+      <p>Nicht für jeden Einsatzort stellt das Kapitel 5.7 eine besondere Anforderung. Halte auch das fest, wenn es zutrifft.</p>
 
       <div class="case">
         <div class="case-head">
           <span class="case-badge">A</span>
-          <p class="case-text">Weihnachtsfeier im Foyer eines Hallenbads. Die Wände sollen mit Uplights angestrahlt werden.</p>
+          <p class="case-text">Abiball in der Aula einer Schule. Trockener Innenraum, die Scheinwerfer hängen an der vorhandenen Traverse.</p>
         </div>
         <span class="field-label">Formulierung in der DGUV Information</span>
         <div class="answer" contenteditable="true" data-ph="Hier schreiben"></div>
@@ -203,7 +220,7 @@ td.entry{background:#fff;min-width:12em}
       <div class="case">
         <div class="case-head">
           <span class="case-badge">B</span>
-          <p class="case-text">Sommerfest im Freien. Die Bühne hat ein festes Dach und seitliche Planen, die Scheinwerfer hängen darunter.</p>
+          <p class="case-text">Weihnachtsfeier im Foyer eines Hallenbads. Die Wände sollen mit Uplights angestrahlt werden.</p>
         </div>
         <span class="field-label">Formulierung in der DGUV Information</span>
         <div class="answer" contenteditable="true" data-ph="Hier schreiben"></div>
@@ -225,7 +242,7 @@ td.entry{background:#fff;min-width:12em}
       <div class="case">
         <div class="case-head">
           <span class="case-badge">D</span>
-          <p class="case-text">Lesung im Gewölbekeller eines Weinguts. Die Wände sind feucht, von der Decke tropft es an einigen Stellen.</p>
+          <p class="case-text">Produktpräsentation in einer Messehalle. Die Halle ist beheizt und trocken.</p>
         </div>
         <span class="field-label">Formulierung in der DGUV Information</span>
         <div class="answer" contenteditable="true" data-ph="Hier schreiben"></div>
@@ -236,7 +253,7 @@ td.entry{background:#fff;min-width:12em}
       <div class="case">
         <div class="case-head">
           <span class="case-badge">E</span>
-          <p class="case-text">Wassershow in einem gefüllten Springbrunnenbecken. Zwei Scheinwerfer sollen auf Stativen im Wasser stehen.</p>
+          <p class="case-text">Sommerfest im Freien. Die Bühne hat ein festes Dach und seitliche Planen, die Scheinwerfer hängen darunter.</p>
         </div>
         <span class="field-label">Formulierung in der DGUV Information</span>
         <div class="answer" contenteditable="true" data-ph="Hier schreiben"></div>
@@ -244,15 +261,23 @@ td.entry{background:#fff;min-width:12em}
         <div class="answer short" contenteditable="true" data-ph="IP …"></div>
       </div>
 
-      <p class="sub">Bei einem der Fälle findest du im Kapitel 5.7 keine Mindestschutzart. Halte fest, um welchen es sich handelt.</p>
-      <div class="answer short" contenteditable="true" data-ph="Fall …"></div>
+      <div class="case">
+        <div class="case-head">
+          <span class="case-badge">F</span>
+          <p class="case-text">Lesung im Gewölbekeller eines Weinguts. Die Wände sind feucht, von der Decke tropft es an einigen Stellen.</p>
+        </div>
+        <span class="field-label">Formulierung in der DGUV Information</span>
+        <div class="answer" contenteditable="true" data-ph="Hier schreiben"></div>
+        <span class="field-label">Mindestschutzart</span>
+        <div class="answer short" contenteditable="true" data-ph="IP …"></div>
+      </div>
     </div>
   </section>
 
   <section class="task">
     <div class="task-bar"><span class="num">2</span><h2>Geräte zuordnen</h2></div>
     <div class="task-body">
-      <p>Im Lager und im Angebot deines Lieferanten stehen diese Geräte:</p>
+      <p>Das sind die Geräte, die du in Arbeitsauftrag 2 recherchiert hast:</p>
 
       <div class="table-wrap">
         <table>
@@ -268,21 +293,42 @@ td.entry{background:#fff;min-width:12em}
         </table>
       </div>
 
-      <p class="sub">Ordne jedem Fall aus Aufgabe 1 die Geräte zu, die die geforderte Mindestschutzart erfüllen. Bestimme anschließend das günstigste Gerät, das die Anforderung gerade noch erfüllt.</p>
+      <p>Wähle für jeden Fall ein Gerät aus. Unter der Auswahl siehst du sofort, ob es die geforderte Mindestschutzart erfüllt. Probiere ruhig mehrere Geräte durch.</p>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Fall</th><th>Geräte, die die Anforderung erfüllen</th><th>Günstigstes davon</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="fall">A</td><td class="entry" contenteditable="true"></td><td class="entry" contenteditable="true"></td></tr>
-            <tr><td class="fall">B</td><td class="entry" contenteditable="true"></td><td class="entry" contenteditable="true"></td></tr>
-            <tr><td class="fall">C</td><td class="entry" contenteditable="true"></td><td class="entry" contenteditable="true"></td></tr>
-            <tr><td class="fall">D</td><td class="entry" contenteditable="true"></td><td class="entry" contenteditable="true"></td></tr>
-            <tr><td class="fall">E</td><td class="entry" contenteditable="true"></td><td class="entry" contenteditable="true"></td></tr>
-          </tbody>
-        </table>
+      <div class="case">
+        <div class="case-head"><span class="case-badge">A</span><p class="case-text">Aula einer Schule</p></div>
+        <div class="pick"><select data-case="A" aria-label="Gerät für Fall A"><option value="">Gerät wählen</option></select></div>
+        <div class="verdict" data-verdict="A">Noch kein Gerät gewählt.</div>
+      </div>
+
+      <div class="case">
+        <div class="case-head"><span class="case-badge">B</span><p class="case-text">Foyer eines Hallenbads</p></div>
+        <div class="pick"><select data-case="B" aria-label="Gerät für Fall B"><option value="">Gerät wählen</option></select></div>
+        <div class="verdict" data-verdict="B">Noch kein Gerät gewählt.</div>
+      </div>
+
+      <div class="case">
+        <div class="case-head"><span class="case-badge">C</span><p class="case-text">Traversenbühne ohne Dach</p></div>
+        <div class="pick"><select data-case="C" aria-label="Gerät für Fall C"><option value="">Gerät wählen</option></select></div>
+        <div class="verdict" data-verdict="C">Noch kein Gerät gewählt.</div>
+      </div>
+
+      <div class="case">
+        <div class="case-head"><span class="case-badge">D</span><p class="case-text">Beheizte Messehalle</p></div>
+        <div class="pick"><select data-case="D" aria-label="Gerät für Fall D"><option value="">Gerät wählen</option></select></div>
+        <div class="verdict" data-verdict="D">Noch kein Gerät gewählt.</div>
+      </div>
+
+      <div class="case">
+        <div class="case-head"><span class="case-badge">E</span><p class="case-text">Bühne mit Dach und seitlichen Planen</p></div>
+        <div class="pick"><select data-case="E" aria-label="Gerät für Fall E"><option value="">Gerät wählen</option></select></div>
+        <div class="verdict" data-verdict="E">Noch kein Gerät gewählt.</div>
+      </div>
+
+      <div class="case">
+        <div class="case-head"><span class="case-badge">F</span><p class="case-text">Feuchter Gewölbekeller</p></div>
+        <div class="pick"><select data-case="F" aria-label="Gerät für Fall F"><option value="">Gerät wählen</option></select></div>
+        <div class="verdict" data-verdict="F">Noch kein Gerät gewählt.</div>
       </div>
     </div>
   </section>
@@ -290,6 +336,9 @@ td.entry{background:#fff;min-width:12em}
   <section class="task">
     <div class="task-bar"><span class="num">3</span><h2>Der Sonderfall am Wasserbecken</h2></div>
     <div class="task-body">
+      <p>Eine weitere Anfrage kommt herein: Wassershow in einem gefüllten Springbrunnenbecken. Zwei Scheinwerfer sollen auf Stativen im Wasser stehen.</p>
+      <p>In Kapitel 5.7 findest du dafür keine Mindestschutzart, sondern andere Vorgaben.</p>
+
       <p class="sub">Welche Bereiche unterscheidet die Tabelle 4, und wo fangen diese Bereiche jeweils an und hören auf?</p>
       <div class="answer" contenteditable="true" data-ph="Bereich 0 und Bereich 1"></div>
 
@@ -304,7 +353,7 @@ td.entry{background:#fff;min-width:12em}
   <section class="task">
     <div class="task-bar"><span class="num">4</span><h2>Nur IP 20 im Lager</h2></div>
     <div class="task-body">
-      <p>Für Fall C stehen im Lager nur Scheinwerfer mit IP 20 zur Verfügung. Neue Geräte lassen sich bis zum Termin nicht mehr beschaffen.</p>
+      <p>Für Fall C, die Traversenbühne ohne Dach, stehen im Lager nur Scheinwerfer mit IP 20 zur Verfügung. Neue Geräte lassen sich bis zum Termin nicht mehr beschaffen.</p>
       <p>Kläre, ob der Einsatz trotzdem zulässig ist. Falls ja, notiere alle Bedingungen, die die DGUV Information daran knüpft. Achte dabei besonders auf den Hinweis zur Wärme.</p>
       <div class="answer tall" contenteditable="true" data-ph="Zulässig? Bedingungen?"></div>
     </div>
@@ -328,26 +377,85 @@ td.entry{background:#fff;min-width:12em}
 
 <script>
 (function(){
-  var fields = document.querySelectorAll('[contenteditable="true"]');
 
-  document.getElementById('print').addEventListener('click', function(){
+  var geraete = [
+    { name:"Robe FORTE",          ip:"IP 20", wasser:0 },
+    { name:"JB-Lighting A12",     ip:"IP 20", wasser:0 },
+    { name:"Martin MAC Aura XIP", ip:"IP 54", wasser:4 },
+    { name:"Robe iFORTE",         ip:"IP 65", wasser:5 },
+    { name:"SGM P-5",             ip:"IP 65", wasser:5 },
+    { name:"ARRI SkyPanel X21",   ip:"IP 66", wasser:6 }
+  ];
+
+  var bedeutung = {
+    0:"kein Schutz gegen Wasser",
+    1:"Schutz gegen senkrecht tropfendes Wasser",
+    2:"Schutz gegen tropfendes Wasser bei 15 Grad Neigung",
+    3:"Schutz gegen Sprühwasser",
+    4:"Schutz gegen Spritzwasser",
+    5:"Schutz gegen Strahlwasser",
+    6:"Schutz gegen starken Wasserstrahl"
+  };
+
+  // Geforderte zweite Kennziffer je Fall. 0 bedeutet: keine besondere Anforderung.
+  var faelle = {
+    A:{ noetig:0 },
+    B:{ noetig:1 },
+    C:{ noetig:3 },
+    D:{ noetig:0 },
+    E:{ noetig:1 },
+    F:{ noetig:1 }
+  };
+
+  document.querySelectorAll("select[data-case]").forEach(function(sel){
+    geraete.forEach(function(g, i){
+      var opt = document.createElement("option");
+      opt.value = String(i);
+      opt.textContent = g.name + " (" + g.ip + ")";
+      sel.appendChild(opt);
+    });
+
+    sel.addEventListener("change", function(){
+      var fall = sel.getAttribute("data-case");
+      var box  = document.querySelector('[data-verdict="' + fall + '"]');
+      box.classList.remove("ja","nein");
+
+      if (sel.value === ""){
+        box.textContent = "Noch kein Gerät gewählt.";
+        return;
+      }
+
+      var g = geraete[parseInt(sel.value, 10)];
+      var reicht = g.wasser >= faelle[fall].noetig;
+
+      box.classList.add(reicht ? "ja" : "nein");
+      box.innerHTML =
+        g.name + " hat " + g.ip + ". Die zweite Kennziffer " + g.wasser +
+        " bedeutet: " + bedeutung[g.wasser] + ". " +
+        "<b>Für Fall " + fall + " " + (reicht ? "ausreichend." : "nicht ausreichend.") + "</b>";
+    });
+  });
+
+  document.getElementById("print").addEventListener("click", function(){
     window.print();
   });
 
+  var fields = document.querySelectorAll('[contenteditable="true"]');
   fields.forEach(function(f){
-    f.addEventListener('paste', function(e){
+    f.addEventListener("paste", function(e){
       e.preventDefault();
-      var text = (e.clipboardData || window.clipboardData).getData('text/plain');
-      document.execCommand('insertText', false, text);
+      var text = (e.clipboardData || window.clipboardData).getData("text/plain");
+      document.execCommand("insertText", false, text);
     });
   });
 
-  window.addEventListener('beforeunload', function(e){
+  window.addEventListener("beforeunload", function(e){
     var written = Array.prototype.some.call(fields, function(f){
       return f.textContent.trim().length > 0;
     });
-    if (written){ e.preventDefault(); e.returnValue = ''; }
+    if (written){ e.preventDefault(); e.returnValue = ""; }
   });
+
 })();
 </script>
 
